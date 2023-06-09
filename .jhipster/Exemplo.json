@@ -6,6 +6,15 @@
       "fieldName": "nome",
       "fieldType": "String",
       "fieldValidateRules": []
+    },
+    {
+      "fieldName": "idade",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "teste",
+      "fieldType": "String"
     }
   ],
   "name": "Exemplo",

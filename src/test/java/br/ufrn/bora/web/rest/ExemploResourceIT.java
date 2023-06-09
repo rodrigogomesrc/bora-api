@@ -31,6 +31,12 @@ class ExemploResourceIT {
     private static final String DEFAULT_NOME = "AAAAAAAAAA";
     private static final String UPDATED_NOME = "BBBBBBBBBB";
 
+    private static final Integer DEFAULT_IDADE = 1;
+    private static final Integer UPDATED_IDADE = 2;
+
+    private static final String DEFAULT_TESTE = "AAAAAAAAAA";
+    private static final String UPDATED_TESTE = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/exemplos";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -52,7 +58,7 @@ class ExemploResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Exemplo createEntity() {
-        Exemplo exemplo = new Exemplo().nome(DEFAULT_NOME);
+        Exemplo exemplo = new Exemplo().nome(DEFAULT_NOME).idade(DEFAULT_IDADE).teste(DEFAULT_TESTE);
         return exemplo;
     }
 
@@ -63,7 +69,7 @@ class ExemploResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Exemplo createUpdatedEntity() {
-        Exemplo exemplo = new Exemplo().nome(UPDATED_NOME);
+        Exemplo exemplo = new Exemplo().nome(UPDATED_NOME).idade(UPDATED_IDADE).teste(UPDATED_TESTE);
         return exemplo;
     }
 
@@ -87,6 +93,8 @@ class ExemploResourceIT {
         assertThat(exemploList).hasSize(databaseSizeBeforeCreate + 1);
         Exemplo testExemplo = exemploList.get(exemploList.size() - 1);
         assertThat(testExemplo.getNome()).isEqualTo(DEFAULT_NOME);
+        assertThat(testExemplo.getIdade()).isEqualTo(DEFAULT_IDADE);
+        assertThat(testExemplo.getTeste()).isEqualTo(DEFAULT_TESTE);
     }
 
     @Test
@@ -108,6 +116,23 @@ class ExemploResourceIT {
     }
 
     @Test
+    void checkIdadeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = exemploRepository.findAll().size();
+        // set the field null
+        exemplo.setIdade(null);
+
+        // Create the Exemplo, which fails.
+        ExemploDTO exemploDTO = exemploMapper.toDto(exemplo);
+
+        restExemploMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(exemploDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Exemplo> exemploList = exemploRepository.findAll();
+        assertThat(exemploList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
     void getAllExemplos() throws Exception {
         // Initialize the database
         exemploRepository.save(exemplo);
@@ -118,7 +143,9 @@ class ExemploResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(exemplo.getId())))
-            .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)));
+            .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)))
+            .andExpect(jsonPath("$.[*].idade").value(hasItem(DEFAULT_IDADE)))
+            .andExpect(jsonPath("$.[*].teste").value(hasItem(DEFAULT_TESTE)));
     }
 
     @Test
@@ -132,7 +159,9 @@ class ExemploResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(exemplo.getId()))
-            .andExpect(jsonPath("$.nome").value(DEFAULT_NOME));
+            .andExpect(jsonPath("$.nome").value(DEFAULT_NOME))
+            .andExpect(jsonPath("$.idade").value(DEFAULT_IDADE))
+            .andExpect(jsonPath("$.teste").value(DEFAULT_TESTE));
     }
 
     @Test
@@ -150,7 +179,7 @@ class ExemploResourceIT {
 
         // Update the exemplo
         Exemplo updatedExemplo = exemploRepository.findById(exemplo.getId()).get();
-        updatedExemplo.nome(UPDATED_NOME);
+        updatedExemplo.nome(UPDATED_NOME).idade(UPDATED_IDADE).teste(UPDATED_TESTE);
         ExemploDTO exemploDTO = exemploMapper.toDto(updatedExemplo);
 
         restExemploMockMvc
@@ -166,6 +195,8 @@ class ExemploResourceIT {
         assertThat(exemploList).hasSize(databaseSizeBeforeUpdate);
         Exemplo testExemplo = exemploList.get(exemploList.size() - 1);
         assertThat(testExemplo.getNome()).isEqualTo(UPDATED_NOME);
+        assertThat(testExemplo.getIdade()).isEqualTo(UPDATED_IDADE);
+        assertThat(testExemplo.getTeste()).isEqualTo(UPDATED_TESTE);
     }
 
     @Test
@@ -241,6 +272,8 @@ class ExemploResourceIT {
         Exemplo partialUpdatedExemplo = new Exemplo();
         partialUpdatedExemplo.setId(exemplo.getId());
 
+        partialUpdatedExemplo.teste(UPDATED_TESTE);
+
         restExemploMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedExemplo.getId())
@@ -254,6 +287,8 @@ class ExemploResourceIT {
         assertThat(exemploList).hasSize(databaseSizeBeforeUpdate);
         Exemplo testExemplo = exemploList.get(exemploList.size() - 1);
         assertThat(testExemplo.getNome()).isEqualTo(DEFAULT_NOME);
+        assertThat(testExemplo.getIdade()).isEqualTo(DEFAULT_IDADE);
+        assertThat(testExemplo.getTeste()).isEqualTo(UPDATED_TESTE);
     }
 
     @Test
@@ -267,7 +302,7 @@ class ExemploResourceIT {
         Exemplo partialUpdatedExemplo = new Exemplo();
         partialUpdatedExemplo.setId(exemplo.getId());
 
-        partialUpdatedExemplo.nome(UPDATED_NOME);
+        partialUpdatedExemplo.nome(UPDATED_NOME).idade(UPDATED_IDADE).teste(UPDATED_TESTE);
 
         restExemploMockMvc
             .perform(
@@ -282,6 +317,8 @@ class ExemploResourceIT {
         assertThat(exemploList).hasSize(databaseSizeBeforeUpdate);
         Exemplo testExemplo = exemploList.get(exemploList.size() - 1);
         assertThat(testExemplo.getNome()).isEqualTo(UPDATED_NOME);
+        assertThat(testExemplo.getIdade()).isEqualTo(UPDATED_IDADE);
+        assertThat(testExemplo.getTeste()).isEqualTo(UPDATED_TESTE);
     }
 
     @Test

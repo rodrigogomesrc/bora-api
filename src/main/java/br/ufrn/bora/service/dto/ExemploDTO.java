@@ -2,6 +2,7 @@ package br.ufrn.bora.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link br.ufrn.bora.domain.Exemplo} entity.
@@ -12,6 +13,11 @@ public class ExemploDTO implements Serializable {
     private String id;
 
     private String nome;
+
+    @NotNull
+    private Integer idade;
+
+    private String teste;
 
     public String getId() {
         return id;
@@ -27,6 +33,22 @@ public class ExemploDTO implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Integer getIdade() {
+        return idade;
+    }
+
+    public void setIdade(Integer idade) {
+        this.idade = idade;
+    }
+
+    public String getTeste() {
+        return teste;
+    }
+
+    public void setTeste(String teste) {
+        this.teste = teste;
     }
 
     @Override
@@ -56,6 +78,8 @@ public class ExemploDTO implements Serializable {
         return "ExemploDTO{" +
             "id='" + getId() + "'" +
             ", nome='" + getNome() + "'" +
+            ", idade=" + getIdade() +
+            ", teste='" + getTeste() + "'" +
             "}";
     }
 }

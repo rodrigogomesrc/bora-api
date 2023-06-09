@@ -1,6 +1,7 @@
 package br.ufrn.bora.domain;
 
 import java.io.Serializable;
+import javax.validation.constraints.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -19,6 +20,13 @@ public class Exemplo implements Serializable {
 
     @Field("nome")
     private String nome;
+
+    @NotNull
+    @Field("idade")
+    private Integer idade;
+
+    @Field("teste")
+    private String teste;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -48,6 +56,32 @@ public class Exemplo implements Serializable {
         this.nome = nome;
     }
 
+    public Integer getIdade() {
+        return this.idade;
+    }
+
+    public Exemplo idade(Integer idade) {
+        this.setIdade(idade);
+        return this;
+    }
+
+    public void setIdade(Integer idade) {
+        this.idade = idade;
+    }
+
+    public String getTeste() {
+        return this.teste;
+    }
+
+    public Exemplo teste(String teste) {
+        this.setTeste(teste);
+        return this;
+    }
+
+    public void setTeste(String teste) {
+        this.teste = teste;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -73,6 +107,8 @@ public class Exemplo implements Serializable {
         return "Exemplo{" +
             "id=" + getId() +
             ", nome='" + getNome() + "'" +
+            ", idade=" + getIdade() +
+            ", teste='" + getTeste() + "'" +
             "}";
     }
 }

@@ -1,0 +1,16 @@
+{
+  "changelogDate": "20230609195918",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": []
+    }
+  ],
+  "name": "Exemplo",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}

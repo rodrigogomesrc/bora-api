@@ -28,6 +28,8 @@ public class InitialSetupMigration {
         userAuthority = template.save(userAuthority);
         Authority adminAuthority = createAdminAuthority();
         adminAuthority = template.save(adminAuthority);
+        Authority generalUserAuthority = createAuthority(AuthoritiesConstants.GENERAL_USER);
+        generalUserAuthority = template.save(generalUserAuthority);
         addUsers(userAuthority, adminAuthority);
     }
 

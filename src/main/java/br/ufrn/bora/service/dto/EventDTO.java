@@ -1,5 +1,6 @@
 package br.ufrn.bora.service.dto;
 
+import br.ufrn.bora.domain.enumeration.Status;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -17,6 +18,8 @@ public class EventDTO implements Serializable {
     private String organization;
 
     private LocalDate date;
+
+    private Status status;
 
     private LocationDTO location;
 
@@ -50,6 +53,14 @@ public class EventDTO implements Serializable {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public LocationDTO getLocation() {
@@ -89,6 +100,7 @@ public class EventDTO implements Serializable {
             ", title='" + getTitle() + "'" +
             ", organization='" + getOrganization() + "'" +
             ", date='" + getDate() + "'" +
+            ", status='" + getStatus() + "'" +
             ", location=" + getLocation() +
             "}";
     }

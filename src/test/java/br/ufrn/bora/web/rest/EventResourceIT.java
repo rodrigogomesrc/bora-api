@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import br.ufrn.bora.IntegrationTest;
 import br.ufrn.bora.domain.Event;
+import br.ufrn.bora.domain.enumeration.Status;
 import br.ufrn.bora.repository.EventRepository;
 import br.ufrn.bora.service.dto.EventDTO;
 import br.ufrn.bora.service.mapper.EventMapper;
@@ -39,6 +40,9 @@ class EventResourceIT {
     private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
 
+    private static final Status DEFAULT_STATUS = Status.UNDEFINED;
+    private static final Status UPDATED_STATUS = Status.UNDEFINED;
+
     private static final String ENTITY_API_URL = "/api/events";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -60,7 +64,7 @@ class EventResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Event createEntity() {
-        Event event = new Event().title(DEFAULT_TITLE).organization(DEFAULT_ORGANIZATION).date(DEFAULT_DATE);
+        Event event = new Event().title(DEFAULT_TITLE).organization(DEFAULT_ORGANIZATION).date(DEFAULT_DATE).status(DEFAULT_STATUS);
         return event;
     }
 
@@ -71,7 +75,7 @@ class EventResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Event createUpdatedEntity() {
-        Event event = new Event().title(UPDATED_TITLE).organization(UPDATED_ORGANIZATION).date(UPDATED_DATE);
+        Event event = new Event().title(UPDATED_TITLE).organization(UPDATED_ORGANIZATION).date(UPDATED_DATE).status(UPDATED_STATUS);
         return event;
     }
 
@@ -97,6 +101,7 @@ class EventResourceIT {
         assertThat(testEvent.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testEvent.getOrganization()).isEqualTo(DEFAULT_ORGANIZATION);
         assertThat(testEvent.getDate()).isEqualTo(DEFAULT_DATE);
+        assertThat(testEvent.getStatus()).isEqualTo(DEFAULT_STATUS);
     }
 
     @Test
@@ -130,7 +135,8 @@ class EventResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(event.getId())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].organization").value(hasItem(DEFAULT_ORGANIZATION)))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())));
+            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
 
     @Test
@@ -146,7 +152,8 @@ class EventResourceIT {
             .andExpect(jsonPath("$.id").value(event.getId()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.organization").value(DEFAULT_ORGANIZATION))
-            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()));
+            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
 
     @Test
@@ -164,7 +171,7 @@ class EventResourceIT {
 
         // Update the event
         Event updatedEvent = eventRepository.findById(event.getId()).get();
-        updatedEvent.title(UPDATED_TITLE).organization(UPDATED_ORGANIZATION).date(UPDATED_DATE);
+        updatedEvent.title(UPDATED_TITLE).organization(UPDATED_ORGANIZATION).date(UPDATED_DATE).status(UPDATED_STATUS);
         EventDTO eventDTO = eventMapper.toDto(updatedEvent);
 
         restEventMockMvc
@@ -182,6 +189,7 @@ class EventResourceIT {
         assertThat(testEvent.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testEvent.getOrganization()).isEqualTo(UPDATED_ORGANIZATION);
         assertThat(testEvent.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testEvent.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test
@@ -274,6 +282,7 @@ class EventResourceIT {
         assertThat(testEvent.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testEvent.getOrganization()).isEqualTo(DEFAULT_ORGANIZATION);
         assertThat(testEvent.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testEvent.getStatus()).isEqualTo(DEFAULT_STATUS);
     }
 
     @Test
@@ -287,7 +296,7 @@ class EventResourceIT {
         Event partialUpdatedEvent = new Event();
         partialUpdatedEvent.setId(event.getId());
 
-        partialUpdatedEvent.title(UPDATED_TITLE).organization(UPDATED_ORGANIZATION).date(UPDATED_DATE);
+        partialUpdatedEvent.title(UPDATED_TITLE).organization(UPDATED_ORGANIZATION).date(UPDATED_DATE).status(UPDATED_STATUS);
 
         restEventMockMvc
             .perform(
@@ -304,6 +313,7 @@ class EventResourceIT {
         assertThat(testEvent.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testEvent.getOrganization()).isEqualTo(UPDATED_ORGANIZATION);
         assertThat(testEvent.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testEvent.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test

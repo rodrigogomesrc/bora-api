@@ -1,5 +1,6 @@
 package br.ufrn.bora.domain;
 
+import br.ufrn.bora.domain.enumeration.Status;
 import java.io.Serializable;
 import java.time.LocalDate;
 import org.springframework.data.annotation.Id;
@@ -27,6 +28,9 @@ public class Event implements Serializable {
 
     @Field("date")
     private LocalDate date;
+
+    @Field("status")
+    private Status status;
 
     @DBRef
     @Field("location")
@@ -86,6 +90,19 @@ public class Event implements Serializable {
         this.date = date;
     }
 
+    public Status getStatus() {
+        return this.status;
+    }
+
+    public Event status(Status status) {
+        this.setStatus(status);
+        return this;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public Location getLocation() {
         return this.location;
     }
@@ -126,6 +143,7 @@ public class Event implements Serializable {
             ", title='" + getTitle() + "'" +
             ", organization='" + getOrganization() + "'" +
             ", date='" + getDate() + "'" +
+            ", status='" + getStatus() + "'" +
             "}";
     }
 }

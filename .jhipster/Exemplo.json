@@ -1,6 +1,7 @@
 {
   "changelogDate": "20230609195918",
   "dto": "mapstruct",
+  "entityTableName": "exemplo",
   "fields": [
     {
       "fieldName": "nome",
@@ -21,5 +22,6 @@
   "pagination": "no",
   "readOnly": false,
   "relationships": [],
+  "searchEngine": "no",
   "service": "serviceClass"
 }

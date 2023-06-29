@@ -37,6 +37,22 @@ public class EventRegisterService {
     }
 
     /**
+     * Save a eventRegister.
+     *
+     * @param eventId to get the event to add to EventRegister.
+     * @param userId to get the user to add to EventRegister.
+     * @return the persisted entity.
+     */
+    public EventRegister save(int eventId, int userId) {
+        EventRegister eventRegister = new EventRegister();
+
+        //TODO: get event and user from database and add to eventRegister
+
+        log.debug("Request to save EventRegister : {}", eventRegister);
+        return eventRegisterRepository.save(eventRegister);
+    }
+
+    /**
      * Update a eventRegister.
      *
      * @param eventRegister the entity to save.

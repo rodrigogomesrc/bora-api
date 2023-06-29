@@ -1,6 +1,9 @@
 package br.ufrn.bora.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,6 +24,11 @@ public class EventRegister implements Serializable {
     @DBRef
     @Field("user")
     private User user;
+
+    @DBRef
+    @Field("event")
+    @JsonIgnoreProperties(value = { "location", "eventRegister" }, allowSetters = true)
+    private Set<Event> events = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -47,6 +55,29 @@ public class EventRegister implements Serializable {
 
     public EventRegister user(User user) {
         this.setUser(user);
+        return this;
+    }
+
+    public Set<Event> getEvents() {
+        return this.events;
+    }
+
+    public void setEvents(Set<Event> events) {
+        this.events = events;
+    }
+
+    public EventRegister events(Set<Event> events) {
+        this.setEvents(events);
+        return this;
+    }
+
+    public EventRegister addEvent(Event event) {
+        this.events.add(event);
+        return this;
+    }
+
+    public EventRegister removeEvent(Event event) {
+        this.events.remove(event);
         return this;
     }
 

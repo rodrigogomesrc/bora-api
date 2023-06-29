@@ -61,110 +61,28 @@ public class EventRegisterResource {
     }
 
     /**
-     * {@code PUT  /event-registers/:id} : Updates an existing eventRegister.
+     * {@code POST  /event-registers/:eventId/:userId} : Create a new eventRegister.
      *
-     * @param id the id of the eventRegister to save.
-     * @param eventRegister the eventRegister to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated eventRegister,
-     * or with status {@code 400 (Bad Request)} if the eventRegister is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the eventRegister couldn't be updated.
+     * @param event id of the event to register.
+     * @param user id of the user to register.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new eventRegister, or with status {@code 400 (Bad Request)} if the eventRegister has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/event-registers/{id}")
-    public ResponseEntity<EventRegister> updateEventRegister(
-        @PathVariable(value = "id", required = false) final String id,
-        @RequestBody EventRegister eventRegister
+    @PostMapping("/event-registers/{eventId}/{userId}")
+    public ResponseEntity<EventRegister> createEventRegister(
+        @PathVariable(value = "eventId", required = true) final int eventId,
+        @PathVariable(value = "userId", required = true) final int userId
     ) throws URISyntaxException {
-        log.debug("REST request to update EventRegister : {}, {}", id, eventRegister);
-        if (eventRegister.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, eventRegister.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
+        log.debug("REST request to save EventRegister : {}", eventId);
 
-        if (!eventRegisterRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
+        //TODO: check if the user and event exists
+        //TODO: check if the event is valid according to the issue requirements
 
-        EventRegister result = eventRegisterService.update(eventRegister);
+        EventRegister result = eventRegisterService.save(eventId, userId);
         return ResponseEntity
-            .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, eventRegister.getId()))
+            .created(new URI("/api/event-registers/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId()))
             .body(result);
     }
 
-    /**
-     * {@code PATCH  /event-registers/:id} : Partial updates given fields of an existing eventRegister, field will ignore if it is null
-     *
-     * @param id the id of the eventRegister to save.
-     * @param eventRegister the eventRegister to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated eventRegister,
-     * or with status {@code 400 (Bad Request)} if the eventRegister is not valid,
-     * or with status {@code 404 (Not Found)} if the eventRegister is not found,
-     * or with status {@code 500 (Internal Server Error)} if the eventRegister couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PatchMapping(value = "/event-registers/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<EventRegister> partialUpdateEventRegister(
-        @PathVariable(value = "id", required = false) final String id,
-        @RequestBody EventRegister eventRegister
-    ) throws URISyntaxException {
-        log.debug("REST request to partial update EventRegister partially : {}, {}", id, eventRegister);
-        if (eventRegister.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, eventRegister.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!eventRegisterRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<EventRegister> result = eventRegisterService.partialUpdate(eventRegister);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, eventRegister.getId())
-        );
-    }
-
-    /**
-     * {@code GET  /event-registers} : get all the eventRegisters.
-     *
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of eventRegisters in body.
-     */
-    @GetMapping("/event-registers")
-    public List<EventRegister> getAllEventRegisters(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
-        log.debug("REST request to get all EventRegisters");
-        return eventRegisterService.findAll();
-    }
-
-    /**
-     * {@code GET  /event-registers/:id} : get the "id" eventRegister.
-     *
-     * @param id the id of the eventRegister to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the eventRegister, or with status {@code 404 (Not Found)}.
-     */
-    @GetMapping("/event-registers/{id}")
-    public ResponseEntity<EventRegister> getEventRegister(@PathVariable String id) {
-        log.debug("REST request to get EventRegister : {}", id);
-        Optional<EventRegister> eventRegister = eventRegisterService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(eventRegister);
-    }
-
-    /**
-     * {@code DELETE  /event-registers/:id} : delete the "id" eventRegister.
-     *
-     * @param id the id of the eventRegister to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     */
-    @DeleteMapping("/event-registers/{id}")
-    public ResponseEntity<Void> deleteEventRegister(@PathVariable String id) {
-        log.debug("REST request to delete EventRegister : {}", id);
-        eventRegisterService.delete(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id)).build();
-    }
 }

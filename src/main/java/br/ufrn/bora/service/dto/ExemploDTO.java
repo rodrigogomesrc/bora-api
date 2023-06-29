@@ -1,8 +1,8 @@
 package br.ufrn.bora.service.dto;
 
+import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link br.ufrn.bora.domain.Exemplo} entity.

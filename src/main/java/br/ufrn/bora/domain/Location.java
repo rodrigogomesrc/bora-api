@@ -1,32 +1,27 @@
 package br.ufrn.bora.domain;
 
-import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
- * A Exemplo.
+ * A Location.
  */
-@Document(collection = "exemplo")
+@Document(collection = "location")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Exemplo implements Serializable {
+public class Location implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     private String id;
 
-    @Field("nome")
-    private String nome;
+    @Field("latitude")
+    private Float latitude;
 
-    @NotNull
-    @Field("idade")
-    private Integer idade;
-
-    @Field("teste")
-    private String teste;
+    @Field("longitude")
+    private Float longitude;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -34,7 +29,7 @@ public class Exemplo implements Serializable {
         return this.id;
     }
 
-    public Exemplo id(String id) {
+    public Location id(String id) {
         this.setId(id);
         return this;
     }
@@ -43,43 +38,30 @@ public class Exemplo implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return this.nome;
+    public Float getLatitude() {
+        return this.latitude;
     }
 
-    public Exemplo nome(String nome) {
-        this.setNome(nome);
+    public Location latitude(Float latitude) {
+        this.setLatitude(latitude);
         return this;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setLatitude(Float latitude) {
+        this.latitude = latitude;
     }
 
-    public Integer getIdade() {
-        return this.idade;
+    public Float getLongitude() {
+        return this.longitude;
     }
 
-    public Exemplo idade(Integer idade) {
-        this.setIdade(idade);
+    public Location longitude(Float longitude) {
+        this.setLongitude(longitude);
         return this;
     }
 
-    public void setIdade(Integer idade) {
-        this.idade = idade;
-    }
-
-    public String getTeste() {
-        return this.teste;
-    }
-
-    public Exemplo teste(String teste) {
-        this.setTeste(teste);
-        return this;
-    }
-
-    public void setTeste(String teste) {
-        this.teste = teste;
+    public void setLongitude(Float longitude) {
+        this.longitude = longitude;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -89,10 +71,10 @@ public class Exemplo implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Exemplo)) {
+        if (!(o instanceof Location)) {
             return false;
         }
-        return id != null && id.equals(((Exemplo) o).id);
+        return id != null && id.equals(((Location) o).id);
     }
 
     @Override
@@ -104,11 +86,10 @@ public class Exemplo implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "Exemplo{" +
+        return "Location{" +
             "id=" + getId() +
-            ", nome='" + getNome() + "'" +
-            ", idade=" + getIdade() +
-            ", teste='" + getTeste() + "'" +
+            ", latitude=" + getLatitude() +
+            ", longitude=" + getLongitude() +
             "}";
     }
 }

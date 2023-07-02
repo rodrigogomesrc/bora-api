@@ -43,14 +43,15 @@ public class EventRegisterService {
      * @param userId to get the user to add to EventRegister.
      * @return the persisted entity.
      */
-    public EventRegister save(int eventId, int userId) {
+    /*    public EventRegister save(String eventId, String userId) {
         EventRegister eventRegister = new EventRegister();
+        eventRegister.setUser();
 
         //TODO: get event and user from database and add to eventRegister
 
         log.debug("Request to save EventRegister : {}", eventRegister);
         return eventRegisterRepository.save(eventRegister);
-    }
+    }*/
 
     /**
      * Update a eventRegister.
@@ -118,5 +119,13 @@ public class EventRegisterService {
     public void delete(String id) {
         log.debug("Request to delete EventRegister : {}", id);
         eventRegisterRepository.deleteById(id);
+    }
+
+    /**
+     * Find an eventRegister by user id.
+     */
+    public Optional<EventRegister> findByUserId(String userId) {
+        log.debug("Request to get EventRegister by user id : {}", userId);
+        return eventRegisterRepository.findByUserId(userId);
     }
 }

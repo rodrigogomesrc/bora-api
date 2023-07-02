@@ -3,6 +3,7 @@ package br.ufrn.bora.repository;
 import br.ufrn.bora.domain.EventRegister;
 import java.util.List;
 import java.util.Optional;
+import javax.swing.text.html.Option;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -22,4 +23,7 @@ public interface EventRegisterRepository extends MongoRepository<EventRegister, 
 
     @Query("{'id': ?0}")
     Optional<EventRegister> findOneWithEagerRelationships(String id);
+
+    @Query("{'user.id': ?0}")
+    Optional<EventRegister> findByUserId(String userId);
 }

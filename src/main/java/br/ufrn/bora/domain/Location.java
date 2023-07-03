@@ -144,7 +144,8 @@ public class Location implements Serializable {
         this.country = country;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here
 
     @Override
     public boolean equals(Object o) {
@@ -159,7 +160,8 @@ public class Location implements Serializable {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        // see
+        // https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 
@@ -167,14 +169,14 @@ public class Location implements Serializable {
     @Override
     public String toString() {
         return "Location{" +
-            "id=" + getId() +
-            ", latitude=" + getLatitude() +
-            ", longitude=" + getLongitude() +
-            ", number='" + getNumber() + "'" +
-            ", address='" + getAddress() + "'" +
-            ", city='" + getCity() + "'" +
-            ", state='" + getState() + "'" +
-            ", country='" + getCountry() + "'" +
-            "}";
+                "id=" + getId() +
+                ", latitude=" + getLatitude() +
+                ", longitude=" + getLongitude() +
+                ", number='" + getNumber() + "'" +
+                ", address='" + getAddress() + "'" +
+                ", city='" + getCity() + "'" +
+                ", state='" + getState() + "'" +
+                ", country='" + getCountry() + "'" +
+                "}";
     }
 }

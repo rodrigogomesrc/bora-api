@@ -31,6 +31,7 @@
     "nativeLanguage": "en",
     "otherModules": [],
     "packageFolder": "br/ufrn/bora",
+    "packageFolder": "br/ufrn/bora",
     "packageName": "br.ufrn.bora",
     "pages": [],
     "prodDatabaseType": "mongodb",

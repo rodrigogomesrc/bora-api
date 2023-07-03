@@ -114,14 +114,14 @@ public class LocationDTO implements Serializable {
     @Override
     public String toString() {
         return "LocationDTO{" +
-            "id='" + getId() + "'" +
-            ", latitude=" + getLatitude() +
-            ", longitude=" + getLongitude() +
-            ", number='" + getNumber() + "'" +
-            ", address='" + getAddress() + "'" +
-            ", city='" + getCity() + "'" +
-            ", state='" + getState() + "'" +
-            ", country='" + getCountry() + "'" +
-            "}";
+                "id='" + getId() + "'" +
+                ", latitude=" + getLatitude() +
+                ", longitude=" + getLongitude() +
+                ", number='" + getNumber() + "'" +
+                ", address='" + getAddress() + "'" +
+                ", city='" + getCity() + "'" +
+                ", state='" + getState() + "'" +
+                ", country='" + getCountry() + "'" +
+                "}";
     }
 }

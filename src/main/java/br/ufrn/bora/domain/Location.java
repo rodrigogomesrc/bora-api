@@ -23,6 +23,21 @@ public class Location implements Serializable {
     @Field("longitude")
     private Float longitude;
 
+    @Field("number")
+    private String number;
+
+    @Field("address")
+    private String address;
+
+    @Field("city")
+    private String city;
+
+    @Field("state")
+    private String state;
+
+    @Field("country")
+    private String country;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public String getId() {
@@ -64,6 +79,71 @@ public class Location implements Serializable {
         this.longitude = longitude;
     }
 
+    public String getNumber() {
+        return this.number;
+    }
+
+    public Location number(String number) {
+        this.setNumber(number);
+        return this;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public Location address(String address) {
+        this.setAddress(address);
+        return this;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return this.city;
+    }
+
+    public Location city(String city) {
+        this.setCity(city);
+        return this;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return this.state;
+    }
+
+    public Location state(String state) {
+        this.setState(state);
+        return this;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCountry() {
+        return this.country;
+    }
+
+    public Location country(String country) {
+        this.setCountry(country);
+        return this;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -90,6 +170,11 @@ public class Location implements Serializable {
             "id=" + getId() +
             ", latitude=" + getLatitude() +
             ", longitude=" + getLongitude() +
+            ", number='" + getNumber() + "'" +
+            ", address='" + getAddress() + "'" +
+            ", city='" + getCity() + "'" +
+            ", state='" + getState() + "'" +
+            ", country='" + getCountry() + "'" +
             "}";
     }
 }

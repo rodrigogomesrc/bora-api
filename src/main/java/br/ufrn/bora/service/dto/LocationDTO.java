@@ -15,6 +15,16 @@ public class LocationDTO implements Serializable {
 
     private Float longitude;
 
+    private String number;
+
+    private String address;
+
+    private String city;
+
+    private String state;
+
+    private String country;
+
     public String getId() {
         return id;
     }
@@ -37,6 +47,46 @@ public class LocationDTO implements Serializable {
 
     public void setLongitude(Float longitude) {
         this.longitude = longitude;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     @Override
@@ -67,6 +117,11 @@ public class LocationDTO implements Serializable {
             "id='" + getId() + "'" +
             ", latitude=" + getLatitude() +
             ", longitude=" + getLongitude() +
+            ", number='" + getNumber() + "'" +
+            ", address='" + getAddress() + "'" +
+            ", city='" + getCity() + "'" +
+            ", state='" + getState() + "'" +
+            ", country='" + getCountry() + "'" +
             "}";
     }
 }

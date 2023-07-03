@@ -2,7 +2,7 @@ package br.ufrn.bora.service.dto;
 
 import br.ufrn.bora.domain.enumeration.Status;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -17,11 +17,21 @@ public class EventDTO implements Serializable {
 
     private String organization;
 
-    private LocalDate date;
-
     private Status status;
 
+    private Boolean favorite;
+
+    private String urlImage;
+
+    private LocalDateTime dateStart;
+
+    private LocalDateTime dateEnd;
+
+    private String description;
+
     private LocationDTO location;
+
+    private TicketDTO ticket;
 
     public String getId() {
         return id;
@@ -47,14 +57,6 @@ public class EventDTO implements Serializable {
         this.organization = organization;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
     public Status getStatus() {
         return status;
     }
@@ -63,12 +65,60 @@ public class EventDTO implements Serializable {
         this.status = status;
     }
 
+    public Boolean getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
+
+    public LocalDateTime getDateStart() {
+        return dateStart;
+    }
+
+    public void setDateStart(LocalDateTime dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    public LocalDateTime getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(LocalDateTime dateEnd) {
+        this.dateEnd = dateEnd;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public LocationDTO getLocation() {
         return location;
     }
 
     public void setLocation(LocationDTO location) {
         this.location = location;
+    }
+
+    public TicketDTO getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(TicketDTO ticket) {
+        this.ticket = ticket;
     }
 
     @Override
@@ -96,12 +146,17 @@ public class EventDTO implements Serializable {
     @Override
     public String toString() {
         return "EventDTO{" +
-            "id='" + getId() + "'" +
-            ", title='" + getTitle() + "'" +
-            ", organization='" + getOrganization() + "'" +
-            ", date='" + getDate() + "'" +
-            ", status='" + getStatus() + "'" +
-            ", location=" + getLocation() +
-            "}";
+                "id='" + getId() + "'" +
+                ", title='" + getTitle() + "'" +
+                ", organization='" + getOrganization() + "'" +
+                ", status='" + getStatus() + "'" +
+                ", favorite='" + getFavorite() + "'" +
+                ", urlImage='" + getUrlImage() + "'" +
+                ", dateStart='" + getDateStart() + "'" +
+                ", dateEnd='" + getDateEnd() + "'" +
+                ", description='" + getDescription() + "'" +
+                ", location=" + getLocation() +
+                ", ticket=" + getTicket() +
+                "}";
     }
 }

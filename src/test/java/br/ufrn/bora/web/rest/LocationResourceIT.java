@@ -34,6 +34,21 @@ class LocationResourceIT {
     private static final Float DEFAULT_LONGITUDE = 1F;
     private static final Float UPDATED_LONGITUDE = 2F;
 
+    private static final String DEFAULT_NUMBER = "AAAAAAAAAA";
+    private static final String UPDATED_NUMBER = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CITY = "AAAAAAAAAA";
+    private static final String UPDATED_CITY = "BBBBBBBBBB";
+
+    private static final String DEFAULT_STATE = "AAAAAAAAAA";
+    private static final String UPDATED_STATE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_COUNTRY = "AAAAAAAAAA";
+    private static final String UPDATED_COUNTRY = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/locations";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -55,7 +70,14 @@ class LocationResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Location createEntity() {
-        Location location = new Location().latitude(DEFAULT_LATITUDE).longitude(DEFAULT_LONGITUDE);
+        Location location = new Location()
+            .latitude(DEFAULT_LATITUDE)
+            .longitude(DEFAULT_LONGITUDE)
+            .number(DEFAULT_NUMBER)
+            .address(DEFAULT_ADDRESS)
+            .city(DEFAULT_CITY)
+            .state(DEFAULT_STATE)
+            .country(DEFAULT_COUNTRY);
         return location;
     }
 
@@ -66,7 +88,14 @@ class LocationResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Location createUpdatedEntity() {
-        Location location = new Location().latitude(UPDATED_LATITUDE).longitude(UPDATED_LONGITUDE);
+        Location location = new Location()
+            .latitude(UPDATED_LATITUDE)
+            .longitude(UPDATED_LONGITUDE)
+            .number(UPDATED_NUMBER)
+            .address(UPDATED_ADDRESS)
+            .city(UPDATED_CITY)
+            .state(UPDATED_STATE)
+            .country(UPDATED_COUNTRY);
         return location;
     }
 
@@ -91,6 +120,11 @@ class LocationResourceIT {
         Location testLocation = locationList.get(locationList.size() - 1);
         assertThat(testLocation.getLatitude()).isEqualTo(DEFAULT_LATITUDE);
         assertThat(testLocation.getLongitude()).isEqualTo(DEFAULT_LONGITUDE);
+        assertThat(testLocation.getNumber()).isEqualTo(DEFAULT_NUMBER);
+        assertThat(testLocation.getAddress()).isEqualTo(DEFAULT_ADDRESS);
+        assertThat(testLocation.getCity()).isEqualTo(DEFAULT_CITY);
+        assertThat(testLocation.getState()).isEqualTo(DEFAULT_STATE);
+        assertThat(testLocation.getCountry()).isEqualTo(DEFAULT_COUNTRY);
     }
 
     @Test
@@ -123,7 +157,12 @@ class LocationResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(location.getId())))
             .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE.doubleValue())))
-            .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.doubleValue())));
+            .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.doubleValue())))
+            .andExpect(jsonPath("$.[*].number").value(hasItem(DEFAULT_NUMBER)))
+            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS)))
+            .andExpect(jsonPath("$.[*].city").value(hasItem(DEFAULT_CITY)))
+            .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE)))
+            .andExpect(jsonPath("$.[*].country").value(hasItem(DEFAULT_COUNTRY)));
     }
 
     @Test
@@ -138,7 +177,12 @@ class LocationResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(location.getId()))
             .andExpect(jsonPath("$.latitude").value(DEFAULT_LATITUDE.doubleValue()))
-            .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE.doubleValue()));
+            .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE.doubleValue()))
+            .andExpect(jsonPath("$.number").value(DEFAULT_NUMBER))
+            .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS))
+            .andExpect(jsonPath("$.city").value(DEFAULT_CITY))
+            .andExpect(jsonPath("$.state").value(DEFAULT_STATE))
+            .andExpect(jsonPath("$.country").value(DEFAULT_COUNTRY));
     }
 
     @Test
@@ -156,7 +200,14 @@ class LocationResourceIT {
 
         // Update the location
         Location updatedLocation = locationRepository.findById(location.getId()).get();
-        updatedLocation.latitude(UPDATED_LATITUDE).longitude(UPDATED_LONGITUDE);
+        updatedLocation
+            .latitude(UPDATED_LATITUDE)
+            .longitude(UPDATED_LONGITUDE)
+            .number(UPDATED_NUMBER)
+            .address(UPDATED_ADDRESS)
+            .city(UPDATED_CITY)
+            .state(UPDATED_STATE)
+            .country(UPDATED_COUNTRY);
         LocationDTO locationDTO = locationMapper.toDto(updatedLocation);
 
         restLocationMockMvc
@@ -173,6 +224,11 @@ class LocationResourceIT {
         Location testLocation = locationList.get(locationList.size() - 1);
         assertThat(testLocation.getLatitude()).isEqualTo(UPDATED_LATITUDE);
         assertThat(testLocation.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
+        assertThat(testLocation.getNumber()).isEqualTo(UPDATED_NUMBER);
+        assertThat(testLocation.getAddress()).isEqualTo(UPDATED_ADDRESS);
+        assertThat(testLocation.getCity()).isEqualTo(UPDATED_CITY);
+        assertThat(testLocation.getState()).isEqualTo(UPDATED_STATE);
+        assertThat(testLocation.getCountry()).isEqualTo(UPDATED_COUNTRY);
     }
 
     @Test
@@ -248,7 +304,7 @@ class LocationResourceIT {
         Location partialUpdatedLocation = new Location();
         partialUpdatedLocation.setId(location.getId());
 
-        partialUpdatedLocation.latitude(UPDATED_LATITUDE);
+        partialUpdatedLocation.latitude(UPDATED_LATITUDE).number(UPDATED_NUMBER).city(UPDATED_CITY);
 
         restLocationMockMvc
             .perform(
@@ -264,6 +320,11 @@ class LocationResourceIT {
         Location testLocation = locationList.get(locationList.size() - 1);
         assertThat(testLocation.getLatitude()).isEqualTo(UPDATED_LATITUDE);
         assertThat(testLocation.getLongitude()).isEqualTo(DEFAULT_LONGITUDE);
+        assertThat(testLocation.getNumber()).isEqualTo(UPDATED_NUMBER);
+        assertThat(testLocation.getAddress()).isEqualTo(DEFAULT_ADDRESS);
+        assertThat(testLocation.getCity()).isEqualTo(UPDATED_CITY);
+        assertThat(testLocation.getState()).isEqualTo(DEFAULT_STATE);
+        assertThat(testLocation.getCountry()).isEqualTo(DEFAULT_COUNTRY);
     }
 
     @Test
@@ -277,7 +338,14 @@ class LocationResourceIT {
         Location partialUpdatedLocation = new Location();
         partialUpdatedLocation.setId(location.getId());
 
-        partialUpdatedLocation.latitude(UPDATED_LATITUDE).longitude(UPDATED_LONGITUDE);
+        partialUpdatedLocation
+            .latitude(UPDATED_LATITUDE)
+            .longitude(UPDATED_LONGITUDE)
+            .number(UPDATED_NUMBER)
+            .address(UPDATED_ADDRESS)
+            .city(UPDATED_CITY)
+            .state(UPDATED_STATE)
+            .country(UPDATED_COUNTRY);
 
         restLocationMockMvc
             .perform(
@@ -293,6 +361,11 @@ class LocationResourceIT {
         Location testLocation = locationList.get(locationList.size() - 1);
         assertThat(testLocation.getLatitude()).isEqualTo(UPDATED_LATITUDE);
         assertThat(testLocation.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
+        assertThat(testLocation.getNumber()).isEqualTo(UPDATED_NUMBER);
+        assertThat(testLocation.getAddress()).isEqualTo(UPDATED_ADDRESS);
+        assertThat(testLocation.getCity()).isEqualTo(UPDATED_CITY);
+        assertThat(testLocation.getState()).isEqualTo(UPDATED_STATE);
+        assertThat(testLocation.getCountry()).isEqualTo(UPDATED_COUNTRY);
     }
 
     @Test

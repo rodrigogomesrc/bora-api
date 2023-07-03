@@ -15,8 +15,8 @@ import org.springframework.data.mongodb.core.mapping.event.ValidatingMongoEventL
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import tech.jhipster.config.JHipsterConstants;
-import tech.jhipster.domain.util.JSR310DateConverters.DateToZonedDateTimeConverter;
-import tech.jhipster.domain.util.JSR310DateConverters.ZonedDateTimeToDateConverter;
+import tech.jhipster.domain.util.JSR310DateConverters.DateToLocalDateTimeConverter;
+import tech.jhipster.domain.util.JSR310DateConverters.LocalDateTimeToDateConverter;
 
 @Configuration
 @EnableMongock
@@ -39,8 +39,8 @@ public class DatabaseConfiguration {
     @Bean
     public MongoCustomConversions customConversions() {
         List<Converter<?, ?>> converters = new ArrayList<>();
-        converters.add(DateToZonedDateTimeConverter.INSTANCE);
-        converters.add(ZonedDateTimeToDateConverter.INSTANCE);
+        converters.add(DateToLocalDateTimeConverter.INSTANCE);
+        converters.add(LocalDateTimeToDateConverter.INSTANCE);
         return new MongoCustomConversions(converters);
     }
 }

@@ -1,5 +1,6 @@
 package br.ufrn.bora.web.rest;
 
+import static br.ufrn.bora.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -11,8 +12,10 @@ import br.ufrn.bora.domain.enumeration.Status;
 import br.ufrn.bora.repository.EventRepository;
 import br.ufrn.bora.service.dto.EventDTO;
 import br.ufrn.bora.service.mapper.EventMapper;
-import java.time.LocalDate;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,11 +40,23 @@ class EventResourceIT {
     private static final String DEFAULT_ORGANIZATION = "AAAAAAAAAA";
     private static final String UPDATED_ORGANIZATION = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
-
     private static final Status DEFAULT_STATUS = Status.DONE;
     private static final Status UPDATED_STATUS = Status.UNDEFINED;
+
+    private static final Boolean DEFAULT_FAVORITE = false;
+    private static final Boolean UPDATED_FAVORITE = true;
+
+    private static final String DEFAULT_URL_IMAGE = "AAAAAAAAAA";
+    private static final String UPDATED_URL_IMAGE = "BBBBBBBBBB";
+
+    private static final LocalDateTime DEFAULT_DATE_START = LocalDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final LocalDateTime UPDATED_DATE_START = LocalDateTime.now(ZoneId.systemDefault()).withNano(0);
+
+    private static final LocalDateTime DEFAULT_DATE_END = LocalDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final LocalDateTime UPDATED_DATE_END = LocalDateTime.now(ZoneId.systemDefault()).withNano(0);
+
+    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/events";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -64,7 +79,15 @@ class EventResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Event createEntity() {
-        Event event = new Event().title(DEFAULT_TITLE).organization(DEFAULT_ORGANIZATION).date(DEFAULT_DATE).status(DEFAULT_STATUS);
+        Event event = new Event()
+            .title(DEFAULT_TITLE)
+            .organization(DEFAULT_ORGANIZATION)
+            .status(DEFAULT_STATUS)
+            .favorite(DEFAULT_FAVORITE)
+            .urlImage(DEFAULT_URL_IMAGE)
+            .dateStart(DEFAULT_DATE_START)
+            .dateEnd(DEFAULT_DATE_END)
+            .description(DEFAULT_DESCRIPTION);
         return event;
     }
 
@@ -75,7 +98,15 @@ class EventResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Event createUpdatedEntity() {
-        Event event = new Event().title(UPDATED_TITLE).organization(UPDATED_ORGANIZATION).date(UPDATED_DATE).status(UPDATED_STATUS);
+        Event event = new Event()
+            .title(UPDATED_TITLE)
+            .organization(UPDATED_ORGANIZATION)
+            .status(UPDATED_STATUS)
+            .favorite(UPDATED_FAVORITE)
+            .urlImage(UPDATED_URL_IMAGE)
+            .dateStart(UPDATED_DATE_START)
+            .dateEnd(UPDATED_DATE_END)
+            .description(UPDATED_DESCRIPTION);
         return event;
     }
 
@@ -100,8 +131,12 @@ class EventResourceIT {
         Event testEvent = eventList.get(eventList.size() - 1);
         assertThat(testEvent.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testEvent.getOrganization()).isEqualTo(DEFAULT_ORGANIZATION);
-        assertThat(testEvent.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testEvent.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testEvent.getFavorite()).isEqualTo(DEFAULT_FAVORITE);
+        assertThat(testEvent.getUrlImage()).isEqualTo(DEFAULT_URL_IMAGE);
+        assertThat(testEvent.getDateStart()).isEqualTo(DEFAULT_DATE_START);
+        assertThat(testEvent.getDateEnd()).isEqualTo(DEFAULT_DATE_END);
+        assertThat(testEvent.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
 
     @Test
@@ -135,8 +170,12 @@ class EventResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(event.getId())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].organization").value(hasItem(DEFAULT_ORGANIZATION)))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].favorite").value(hasItem(DEFAULT_FAVORITE.booleanValue())))
+            .andExpect(jsonPath("$.[*].urlImage").value(hasItem(DEFAULT_URL_IMAGE)))
+            .andExpect(jsonPath("$.[*].dateStart").value(hasItem(sameInstant(DEFAULT_DATE_START))))
+            .andExpect(jsonPath("$.[*].dateEnd").value(hasItem(sameInstant(DEFAULT_DATE_END))))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
     }
 
     @Test
@@ -152,8 +191,12 @@ class EventResourceIT {
             .andExpect(jsonPath("$.id").value(event.getId()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.organization").value(DEFAULT_ORGANIZATION))
-            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.favorite").value(DEFAULT_FAVORITE.booleanValue()))
+            .andExpect(jsonPath("$.urlImage").value(DEFAULT_URL_IMAGE))
+            .andExpect(jsonPath("$.dateStart").value(sameInstant(DEFAULT_DATE_START)))
+            .andExpect(jsonPath("$.dateEnd").value(sameInstant(DEFAULT_DATE_END)))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION));
     }
 
     @Test
@@ -171,7 +214,15 @@ class EventResourceIT {
 
         // Update the event
         Event updatedEvent = eventRepository.findById(event.getId()).get();
-        updatedEvent.title(UPDATED_TITLE).organization(UPDATED_ORGANIZATION).date(UPDATED_DATE).status(UPDATED_STATUS);
+        updatedEvent
+            .title(UPDATED_TITLE)
+            .organization(UPDATED_ORGANIZATION)
+            .status(UPDATED_STATUS)
+            .favorite(UPDATED_FAVORITE)
+            .urlImage(UPDATED_URL_IMAGE)
+            .dateStart(UPDATED_DATE_START)
+            .dateEnd(UPDATED_DATE_END)
+            .description(UPDATED_DESCRIPTION);
         EventDTO eventDTO = eventMapper.toDto(updatedEvent);
 
         restEventMockMvc
@@ -188,8 +239,12 @@ class EventResourceIT {
         Event testEvent = eventList.get(eventList.size() - 1);
         assertThat(testEvent.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testEvent.getOrganization()).isEqualTo(UPDATED_ORGANIZATION);
-        assertThat(testEvent.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testEvent.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testEvent.getFavorite()).isEqualTo(UPDATED_FAVORITE);
+        assertThat(testEvent.getUrlImage()).isEqualTo(UPDATED_URL_IMAGE);
+        assertThat(testEvent.getDateStart()).isEqualTo(UPDATED_DATE_START);
+        assertThat(testEvent.getDateEnd()).isEqualTo(UPDATED_DATE_END);
+        assertThat(testEvent.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 
     @Test
@@ -265,7 +320,12 @@ class EventResourceIT {
         Event partialUpdatedEvent = new Event();
         partialUpdatedEvent.setId(event.getId());
 
-        partialUpdatedEvent.title(UPDATED_TITLE).date(UPDATED_DATE);
+        partialUpdatedEvent
+            .title(UPDATED_TITLE)
+            .status(UPDATED_STATUS)
+            .urlImage(UPDATED_URL_IMAGE)
+            .dateStart(UPDATED_DATE_START)
+            .description(UPDATED_DESCRIPTION);
 
         restEventMockMvc
             .perform(
@@ -281,8 +341,12 @@ class EventResourceIT {
         Event testEvent = eventList.get(eventList.size() - 1);
         assertThat(testEvent.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testEvent.getOrganization()).isEqualTo(DEFAULT_ORGANIZATION);
-        assertThat(testEvent.getDate()).isEqualTo(UPDATED_DATE);
-        assertThat(testEvent.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testEvent.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testEvent.getFavorite()).isEqualTo(DEFAULT_FAVORITE);
+        assertThat(testEvent.getUrlImage()).isEqualTo(UPDATED_URL_IMAGE);
+        assertThat(testEvent.getDateStart()).isEqualTo(UPDATED_DATE_START);
+        assertThat(testEvent.getDateEnd()).isEqualTo(DEFAULT_DATE_END);
+        assertThat(testEvent.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 
     @Test
@@ -296,7 +360,15 @@ class EventResourceIT {
         Event partialUpdatedEvent = new Event();
         partialUpdatedEvent.setId(event.getId());
 
-        partialUpdatedEvent.title(UPDATED_TITLE).organization(UPDATED_ORGANIZATION).date(UPDATED_DATE).status(UPDATED_STATUS);
+        partialUpdatedEvent
+            .title(UPDATED_TITLE)
+            .organization(UPDATED_ORGANIZATION)
+            .status(UPDATED_STATUS)
+            .favorite(UPDATED_FAVORITE)
+            .urlImage(UPDATED_URL_IMAGE)
+            .dateStart(UPDATED_DATE_START)
+            .dateEnd(UPDATED_DATE_END)
+            .description(UPDATED_DESCRIPTION);
 
         restEventMockMvc
             .perform(
@@ -312,8 +384,12 @@ class EventResourceIT {
         Event testEvent = eventList.get(eventList.size() - 1);
         assertThat(testEvent.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testEvent.getOrganization()).isEqualTo(UPDATED_ORGANIZATION);
-        assertThat(testEvent.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testEvent.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testEvent.getFavorite()).isEqualTo(UPDATED_FAVORITE);
+        assertThat(testEvent.getUrlImage()).isEqualTo(UPDATED_URL_IMAGE);
+        assertThat(testEvent.getDateStart()).isEqualTo(UPDATED_DATE_START);
+        assertThat(testEvent.getDateEnd()).isEqualTo(UPDATED_DATE_END);
+        assertThat(testEvent.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 
     @Test

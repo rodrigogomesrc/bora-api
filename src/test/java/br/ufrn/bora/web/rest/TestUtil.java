@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
@@ -59,26 +59,27 @@ public final class TestUtil {
     }
 
     /**
-     * A matcher that tests that the examined string represents the same instant as the reference datetime.
+     * A matcher that tests that the examined string represents the same instant as
+     * the reference datetime.
      */
-    public static class ZonedDateTimeMatcher extends TypeSafeDiagnosingMatcher<String> {
+    public static class LocalDateTimeMatcher extends TypeSafeDiagnosingMatcher<String> {
 
-        private final ZonedDateTime date;
+        private final LocalDateTime date;
 
-        public ZonedDateTimeMatcher(ZonedDateTime date) {
+        public LocalDateTimeMatcher(LocalDateTime date) {
             this.date = date;
         }
 
         @Override
         protected boolean matchesSafely(String item, Description mismatchDescription) {
             try {
-                if (!date.isEqual(ZonedDateTime.parse(item))) {
+                if (!date.isEqual(LocalDateTime.parse(item))) {
                     mismatchDescription.appendText("was ").appendValue(item);
                     return false;
                 }
                 return true;
             } catch (DateTimeParseException e) {
-                mismatchDescription.appendText("was ").appendValue(item).appendText(", which could not be parsed as a ZonedDateTime");
+                mismatchDescription.appendText("was ").appendValue(item).appendText(", which could not be parsed as a LocalDateTime");
                 return false;
             }
         }
@@ -90,16 +91,19 @@ public final class TestUtil {
     }
 
     /**
-     * Creates a matcher that matches when the examined string represents the same instant as the reference datetime.
+     * Creates a matcher that matches when the examined string represents the same
+     * instant as the reference datetime.
      *
-     * @param date the reference datetime against which the examined string is checked.
+     * @param date the reference datetime against which the examined string is
+     *             checked.
      */
-    public static ZonedDateTimeMatcher sameInstant(ZonedDateTime date) {
-        return new ZonedDateTimeMatcher(date);
+    public static LocalDateTimeMatcher sameInstant(LocalDateTime date) {
+        return new LocalDateTimeMatcher(date);
     }
 
     /**
-     * A matcher that tests that the examined number represents the same value - it can be Long, Double, etc - as the reference BigDecimal.
+     * A matcher that tests that the examined number represents the same value - it
+     * can be Long, Double, etc - as the reference BigDecimal.
      */
     public static class NumberMatcher extends TypeSafeMatcher<Number> {
 
@@ -141,9 +145,11 @@ public final class TestUtil {
     }
 
     /**
-     * Creates a matcher that matches when the examined number represents the same value as the reference BigDecimal.
+     * Creates a matcher that matches when the examined number represents the same
+     * value as the reference BigDecimal.
      *
-     * @param number the reference BigDecimal against which the examined number is checked.
+     * @param number the reference BigDecimal against which the examined number is
+     *               checked.
      */
     public static NumberMatcher sameNumber(BigDecimal number) {
         return new NumberMatcher(number);
@@ -169,7 +175,9 @@ public final class TestUtil {
     }
 
     /**
-     * Create a {@link FormattingConversionService} which use ISO date format, instead of the localized one.
+     * Create a {@link FormattingConversionService} which use ISO date format,
+     * instead of the localized one.
+     *
      * @return the {@link FormattingConversionService}.
      */
     public static FormattingConversionService createFormattingConversionService() {

@@ -40,7 +40,7 @@ class EventResourceIT {
     private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Status DEFAULT_STATUS = Status.UNDEFINED;
+    private static final Status DEFAULT_STATUS = Status.DONE;
     private static final Status UPDATED_STATUS = Status.UNDEFINED;
 
     private static final String ENTITY_API_URL = "/api/events";

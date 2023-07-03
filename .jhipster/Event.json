@@ -19,7 +19,7 @@
     {
       "fieldName": "status",
       "fieldType": "Status",
-      "fieldValues": "Y"
+      "fieldValues": "DONE, UNDEFINED, COMMING, CANCELED"
     }
   ],
   "name": "Event",

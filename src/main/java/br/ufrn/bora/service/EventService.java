@@ -1,6 +1,7 @@
 package br.ufrn.bora.service;
 
 import br.ufrn.bora.domain.Event;
+import br.ufrn.bora.domain.EventRegister;
 import br.ufrn.bora.repository.EventRepository;
 import br.ufrn.bora.service.dto.EventDTO;
 import br.ufrn.bora.service.mapper.EventMapper;
@@ -104,5 +105,15 @@ public class EventService {
     public void delete(String id) {
         log.debug("Request to delete Event : {}", id);
         eventRepository.deleteById(id);
+    }
+
+    /*
+     * Get an event by its id
+     *
+     * @return the event.
+     * */
+    public Optional<Event> getEventById(String eventId) {
+        log.debug("Request to get Event : {}", eventId);
+        return eventRepository.findById(eventId);
     }
 }

@@ -1,0 +1,29 @@
+{
+  "changelogDate": "20230627120301",
+  "dto": "no",
+  "entityTableName": "event_register",
+  "fields": [],
+  "name": "EventRegister",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "eventRegister",
+      "ownerSide": true,
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "event",
+      "otherEntityRelationshipName": "eventRegister",
+      "relationshipName": "event",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

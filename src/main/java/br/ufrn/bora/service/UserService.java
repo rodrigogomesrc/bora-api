@@ -291,4 +291,12 @@ public class UserService {
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
     }
+
+    /**
+    Get one User by id
+    @return a user
+     */
+    public Optional<User> getUserById(String id) {
+        return userRepository.findById(id);
+    }
 }

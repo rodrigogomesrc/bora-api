@@ -5,9 +5,11 @@ import br.ufrn.bora.domain.Authority;
 import br.ufrn.bora.domain.User;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.constraints.*;
+import org.hibernate.validator.constraints.Length;
 
 /**
  * A DTO representing a user, with his authorities.
@@ -18,7 +20,6 @@ public class AdminUserDTO implements Serializable {
 
     private String id;
 
-    @NotBlank
     @Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1, max = 50)
     private String login;
@@ -32,6 +33,11 @@ public class AdminUserDTO implements Serializable {
     @Email
     @Size(min = 5, max = 254)
     private String email;
+
+    @Length(max = 13, message = "Tamanho máximo de 13 caracteres. Ex: 5584999999999")
+    private String telephone;
+
+    private LocalDateTime dateOfBirth;
 
     @Size(max = 256)
     private String imageUrl;
@@ -61,6 +67,8 @@ public class AdminUserDTO implements Serializable {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
+        this.telephone = user.getTelephone();
+        this.dateOfBirth = user.getDateOfBirth();
         this.activated = user.isActivated();
         this.imageUrl = user.getImageUrl();
         this.langKey = user.getLangKey();
@@ -109,6 +117,22 @@ public class AdminUserDTO implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public LocalDateTime getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDateTime dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getImageUrl() {

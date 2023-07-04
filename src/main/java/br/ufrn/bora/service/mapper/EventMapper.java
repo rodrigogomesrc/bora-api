@@ -18,12 +18,12 @@ public interface EventMapper extends EntityMapper<EventDTO, Event> {
     EventDTO toDto(Event s);
 
     @Named("locationId")
-    @BeanMapping(ignoreByDefault = true)
+    @BeanMapping(ignoreByDefault = false)
     @Mapping(target = "id", source = "id")
     LocationDTO toDtoLocationId(Location location);
 
     @Named("ticketId")
-    @BeanMapping(ignoreByDefault = true)
+    @BeanMapping(ignoreByDefault = false)
     @Mapping(target = "id", source = "id")
     TicketDTO toDtoTicketId(Ticket ticket);
 }

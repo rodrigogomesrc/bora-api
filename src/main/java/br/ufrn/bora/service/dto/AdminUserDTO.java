@@ -5,6 +5,7 @@ import br.ufrn.bora.domain.Authority;
 import br.ufrn.bora.domain.User;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,11 +25,8 @@ public class AdminUserDTO implements Serializable {
     @Size(min = 1, max = 50)
     private String login;
 
-    @Size(max = 50)
-    private String firstName;
-
-    @Size(max = 50)
-    private String lastName;
+    @Size(max = 100)
+    private String name;
 
     @Email
     @Size(min = 5, max = 254)
@@ -37,7 +35,7 @@ public class AdminUserDTO implements Serializable {
     @Length(max = 13, message = "Tamanho máximo de 13 caracteres. Ex: 5584999999999")
     private String telephone;
 
-    private LocalDateTime dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @Size(max = 256)
     private String imageUrl;
@@ -64,8 +62,7 @@ public class AdminUserDTO implements Serializable {
     public AdminUserDTO(User user) {
         this.id = user.getId();
         this.login = user.getLogin();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
+        this.name = user.getName();
         this.email = user.getEmail();
         this.telephone = user.getTelephone();
         this.dateOfBirth = user.getDateOfBirth();
@@ -95,20 +92,12 @@ public class AdminUserDTO implements Serializable {
         this.login = login;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -127,11 +116,11 @@ public class AdminUserDTO implements Serializable {
         this.telephone = telephone;
     }
 
-    public LocalDateTime getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDateTime dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -204,8 +193,7 @@ public class AdminUserDTO implements Serializable {
     public String toString() {
         return "AdminUserDTO{" +
             "login='" + login + '\'' +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
+            ", name='" + name + '\'' +
             ", email='" + email + '\'' +
             ", imageUrl='" + imageUrl + '\'' +
             ", activated=" + activated +

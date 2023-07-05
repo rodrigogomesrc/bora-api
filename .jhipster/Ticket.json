@@ -1,0 +1,26 @@
+{
+  "changelogDate": "20230703024951",
+  "dto": "mapstruct",
+  "entityTableName": "ticket",
+  "fields": [
+    {
+      "fieldName": "price",
+      "fieldType": "Float",
+      "fieldValidateRules": []
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Ticket",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

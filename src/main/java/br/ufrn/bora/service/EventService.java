@@ -1,10 +1,13 @@
 package br.ufrn.bora.service;
 
 import br.ufrn.bora.domain.Event;
-import br.ufrn.bora.domain.EventRegister;
+import br.ufrn.bora.domain.Location;
 import br.ufrn.bora.repository.EventRepository;
+import br.ufrn.bora.service.LocationService;
 import br.ufrn.bora.service.dto.EventDTO;
 import br.ufrn.bora.service.mapper.EventMapper;
+import br.ufrn.bora.service.mapper.LocationMapper;
+import br.ufrn.bora.service.mapper.TicketMapper;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -25,9 +28,25 @@ public class EventService {
 
     private final EventMapper eventMapper;
 
-    public EventService(EventRepository eventRepository, EventMapper eventMapper) {
+    private final LocationService locationService;
+    private final LocationMapper locationMapper;
+    private final TicketService ticketService;
+    private final TicketMapper ticketMapper;
+
+    public EventService(
+        EventRepository eventRepository,
+        EventMapper eventMapper,
+        LocationService locationService,
+        LocationMapper locationMapper,
+        TicketService ticketService,
+        TicketMapper ticketMapper
+    ) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
+        this.locationService = locationService;
+        this.locationMapper = locationMapper;
+        this.ticketService = ticketService;
+        this.ticketMapper = ticketMapper;
     }
 
     /**
@@ -39,6 +58,8 @@ public class EventService {
     public EventDTO save(EventDTO eventDTO) {
         log.debug("Request to save Event : {}", eventDTO);
         Event event = eventMapper.toEntity(eventDTO);
+        event.setLocation(locationMapper.toEntity(locationService.findOne(event.getLocation().getId()).get()));
+        event.setTicket(ticketMapper.toEntity(ticketService.findOne(event.getTicket().getId()).get()));
         event = eventRepository.save(event);
         return eventMapper.toDto(event);
     }
@@ -111,7 +132,7 @@ public class EventService {
      * Get an event by its id
      *
      * @return the event.
-     * */
+     */
     public Optional<Event> getEventById(String eventId) {
         log.debug("Request to get Event : {}", eventId);
         return eventRepository.findById(eventId);

@@ -44,7 +44,9 @@ public class EventResource {
      * {@code POST  /events} : Create a new event.
      *
      * @param eventDTO the eventDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new eventDTO, or with status {@code 400 (Bad Request)} if the event has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with
+     *         body the new eventDTO, or with status {@code 400 (Bad Request)} if
+     *         the event has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/events")
@@ -63,11 +65,14 @@ public class EventResource {
     /**
      * {@code PUT  /events/:id} : Updates an existing event.
      *
-     * @param id the id of the eventDTO to save.
+     * @param id       the id of the eventDTO to save.
      * @param eventDTO the eventDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated eventDTO,
-     * or with status {@code 400 (Bad Request)} if the eventDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the eventDTO couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the updated eventDTO,
+     *         or with status {@code 400 (Bad Request)} if the eventDTO is not
+     *         valid,
+     *         or with status {@code 500 (Internal Server Error)} if the eventDTO
+     *         couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/events/{id}")
@@ -95,14 +100,18 @@ public class EventResource {
     }
 
     /**
-     * {@code PATCH  /events/:id} : Partial updates given fields of an existing event, field will ignore if it is null
+     * {@code PATCH  /events/:id} : Partial updates given fields of an existing
+     * event, field will ignore if it is null
      *
-     * @param id the id of the eventDTO to save.
+     * @param id       the id of the eventDTO to save.
      * @param eventDTO the eventDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated eventDTO,
-     * or with status {@code 400 (Bad Request)} if the eventDTO is not valid,
-     * or with status {@code 404 (Not Found)} if the eventDTO is not found,
-     * or with status {@code 500 (Internal Server Error)} if the eventDTO couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the updated eventDTO,
+     *         or with status {@code 400 (Bad Request)} if the eventDTO is not
+     *         valid,
+     *         or with status {@code 404 (Not Found)} if the eventDTO is not found,
+     *         or with status {@code 500 (Internal Server Error)} if the eventDTO
+     *         couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/events/{id}", consumes = { "application/json", "application/merge-patch+json" })
@@ -133,7 +142,8 @@ public class EventResource {
     /**
      * {@code GET  /events} : get all the events.
      *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of events in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
+     *         of events in body.
      */
     @GetMapping("/events")
     public List<EventDTO> getAllEvents() {
@@ -145,7 +155,8 @@ public class EventResource {
      * {@code GET  /events/:id} : get the "id" event.
      *
      * @param id the id of the eventDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the eventDTO, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the eventDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/events/{id}")
     public ResponseEntity<EventDTO> getEvent(@PathVariable String id) {

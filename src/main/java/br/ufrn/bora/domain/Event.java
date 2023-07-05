@@ -2,7 +2,7 @@ package br.ufrn.bora.domain;
 
 import br.ufrn.bora.domain.enumeration.Status;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -26,15 +26,31 @@ public class Event implements Serializable {
     @Field("organization")
     private String organization;
 
-    @Field("date")
-    private LocalDate date;
-
     @Field("status")
     private Status status;
+
+    @Field("favorite")
+    private Boolean favorite;
+
+    @Field("url_image")
+    private String urlImage;
+
+    @Field("date_start")
+    private LocalDateTime dateStart;
+
+    @Field("date_end")
+    private LocalDateTime dateEnd;
+
+    @Field("description")
+    private String description;
 
     @DBRef
     @Field("location")
     private Location location;
+
+    @DBRef
+    @Field("ticket")
+    private Ticket ticket;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -77,19 +93,6 @@ public class Event implements Serializable {
         this.organization = organization;
     }
 
-    public LocalDate getDate() {
-        return this.date;
-    }
-
-    public Event date(LocalDate date) {
-        this.setDate(date);
-        return this;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
     public Status getStatus() {
         return this.status;
     }
@@ -101,6 +104,71 @@ public class Event implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Boolean getFavorite() {
+        return this.favorite;
+    }
+
+    public Event favorite(Boolean favorite) {
+        this.setFavorite(favorite);
+        return this;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public String getUrlImage() {
+        return this.urlImage;
+    }
+
+    public Event urlImage(String urlImage) {
+        this.setUrlImage(urlImage);
+        return this;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
+
+    public LocalDateTime getDateStart() {
+        return this.dateStart;
+    }
+
+    public Event dateStart(LocalDateTime dateStart) {
+        this.setDateStart(dateStart);
+        return this;
+    }
+
+    public void setDateStart(LocalDateTime dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    public LocalDateTime getDateEnd() {
+        return this.dateEnd;
+    }
+
+    public Event dateEnd(LocalDateTime dateEnd) {
+        this.setDateEnd(dateEnd);
+        return this;
+    }
+
+    public void setDateEnd(LocalDateTime dateEnd) {
+        this.dateEnd = dateEnd;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public Event description(String description) {
+        this.setDescription(description);
+        return this;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Location getLocation() {
@@ -116,7 +184,21 @@ public class Event implements Serializable {
         return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    public Ticket getTicket() {
+        return this.ticket;
+    }
+
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
+    }
+
+    public Event ticket(Ticket ticket) {
+        this.setTicket(ticket);
+        return this;
+    }
+
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here
 
     @Override
     public boolean equals(Object o) {
@@ -131,7 +213,8 @@ public class Event implements Serializable {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        // see
+        // https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 
@@ -139,11 +222,15 @@ public class Event implements Serializable {
     @Override
     public String toString() {
         return "Event{" +
-            "id=" + getId() +
-            ", title='" + getTitle() + "'" +
-            ", organization='" + getOrganization() + "'" +
-            ", date='" + getDate() + "'" +
-            ", status='" + getStatus() + "'" +
-            "}";
+                "id=" + getId() +
+                ", title='" + getTitle() + "'" +
+                ", organization='" + getOrganization() + "'" +
+                ", status='" + getStatus() + "'" +
+                ", favorite='" + getFavorite() + "'" +
+                ", urlImage='" + getUrlImage() + "'" +
+                ", dateStart='" + getDateStart() + "'" +
+                ", dateEnd='" + getDateEnd() + "'" +
+                ", description='" + getDescription() + "'" +
+                "}";
     }
 }

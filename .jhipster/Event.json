@@ -13,13 +13,29 @@
       "fieldValidateRules": []
     },
     {
-      "fieldName": "date",
-      "fieldType": "LocalDate"
-    },
-    {
       "fieldName": "status",
       "fieldType": "Status",
-      "fieldValues": "Y"
+      "fieldValues": "DONE, UNDEFINED, COMMING, CANCELED"
+    },
+    {
+      "fieldName": "favorite",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "urlImage",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateStart",
+      "fieldType": "LocalDateTime"
+    },
+    {
+      "fieldName": "dateEnd",
+      "fieldType": "LocalDateTime"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
     }
   ],
   "name": "Event",
@@ -30,6 +46,13 @@
       "otherEntityField": "id",
       "otherEntityName": "location",
       "relationshipName": "location",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "ticket",
+      "relationshipName": "ticket",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     }

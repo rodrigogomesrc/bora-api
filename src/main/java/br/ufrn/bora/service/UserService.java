@@ -117,7 +117,17 @@ public class UserService {
         // new user gets registration key
         //newUser.setActivationKey(RandomUtil.generateActivationKey());
         Set<Authority> authorities = new HashSet<>();
-        authorityRepository.findById(AuthoritiesConstants.GENERAL_USER).ifPresent(authorities::add);
+
+        for (String authority : userDTO.getAuthorities()) {
+            if (!authority.equals(AuthoritiesConstants.ADMIN) && !authority.equals(AuthoritiesConstants.USER)) {
+                authorities.add(authorityRepository.findById(authority).orElseThrow(() -> new RuntimeException("Authority not found")));
+            } else {
+                throw new RuntimeException("Não é possível criar um usuário com as autoridades ADMIN ou USER");
+            }
+        }
+
+        if (authorities.isEmpty()) throw new RuntimeException("Ao menos uma autoridade válida deve ser informada");
+
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);

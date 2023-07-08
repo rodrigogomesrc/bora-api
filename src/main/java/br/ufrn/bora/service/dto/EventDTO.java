@@ -20,8 +20,18 @@ public class EventDTO implements Serializable {
     private Status status;
 
     private Boolean favorite;
+    
+    private Boolean isPublic;
+    
+    public Boolean getIsPublic() {
+		return isPublic;
+	}
 
-    private String urlImage;
+	public void setIsPublic(Boolean isPublic) {
+		this.isPublic = isPublic;
+	}
+
+	private String urlImage;
 
     private LocalDateTime dateStart;
 
@@ -142,21 +152,11 @@ public class EventDTO implements Serializable {
         return Objects.hash(this.id);
     }
 
-    // prettier-ignore
     @Override
-    public String toString() {
-        return "EventDTO{" +
-                "id='" + getId() + "'" +
-                ", title='" + getTitle() + "'" +
-                ", organization='" + getOrganization() + "'" +
-                ", status='" + getStatus() + "'" +
-                ", favorite='" + getFavorite() + "'" +
-                ", urlImage='" + getUrlImage() + "'" +
-                ", dateStart='" + getDateStart() + "'" +
-                ", dateEnd='" + getDateEnd() + "'" +
-                ", description='" + getDescription() + "'" +
-                ", location=" + getLocation() +
-                ", ticket=" + getTicket() +
-                "}";
-    }
+	public String toString() {
+		return "EventDTO [id=" + id + ", title=" + title + ", organization=" + organization + ", status=" + status
+				+ ", favorite=" + favorite + ", isPublic=" + isPublic + ", urlImage=" + urlImage + ", dateStart="
+				+ dateStart + ", dateEnd=" + dateEnd + ", description=" + description + ", location=" + location
+				+ ", ticket=" + ticket + "]";
+	}
 }

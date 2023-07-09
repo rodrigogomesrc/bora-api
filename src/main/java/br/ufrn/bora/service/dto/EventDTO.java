@@ -1,9 +1,11 @@
 package br.ufrn.bora.service.dto;
 
 import br.ufrn.bora.domain.enumeration.Status;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * A DTO for the {@link br.ufrn.bora.domain.Event} entity.
@@ -20,21 +22,25 @@ public class EventDTO implements Serializable {
     private Status status;
 
     private Boolean favorite;
-    
+
     private Boolean isPublic;
-    
+
     public Boolean getIsPublic() {
-		return isPublic;
-	}
+        return isPublic;
+    }
 
-	public void setIsPublic(Boolean isPublic) {
-		this.isPublic = isPublic;
-	}
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
+    }
 
-	private String urlImage;
+    private String urlImage;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime dateStart;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime dateEnd;
 
     private String description;
@@ -153,10 +159,33 @@ public class EventDTO implements Serializable {
     }
 
     @Override
-	public String toString() {
-		return "EventDTO [id=" + id + ", title=" + title + ", organization=" + organization + ", status=" + status
-				+ ", favorite=" + favorite + ", isPublic=" + isPublic + ", urlImage=" + urlImage + ", dateStart="
-				+ dateStart + ", dateEnd=" + dateEnd + ", description=" + description + ", location=" + location
-				+ ", ticket=" + ticket + "]";
-	}
+    public String toString() {
+        return (
+            "EventDTO [id=" +
+            id +
+            ", title=" +
+            title +
+            ", organization=" +
+            organization +
+            ", status=" +
+            status +
+            ", favorite=" +
+            favorite +
+            ", isPublic=" +
+            isPublic +
+            ", urlImage=" +
+            urlImage +
+            ", dateStart=" +
+            dateStart +
+            ", dateEnd=" +
+            dateEnd +
+            ", description=" +
+            description +
+            ", location=" +
+            location +
+            ", ticket=" +
+            ticket +
+            "]"
+        );
+    }
 }

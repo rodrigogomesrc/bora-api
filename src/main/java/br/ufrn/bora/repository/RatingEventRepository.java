@@ -1,10 +1,7 @@
 package br.ufrn.bora.repository;
 
-import br.ufrn.bora.domain.Event;
 import br.ufrn.bora.domain.RatingEvent;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

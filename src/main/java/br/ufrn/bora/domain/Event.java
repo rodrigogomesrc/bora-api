@@ -1,12 +1,14 @@
 package br.ufrn.bora.domain;
 
 import br.ufrn.bora.domain.enumeration.Status;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * A Event.
@@ -31,20 +33,23 @@ public class Event implements Serializable {
 
     @Field("favorite")
     private Boolean favorite;
-    
+
     @Field("is_public")
     private Boolean isPublic;
 
-	@Field("url_image")
+    @Field("url_image")
     private String urlImage;
 
     @Field("date_start")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime dateStart;
 
     @Field("date_end")
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime dateEnd;
 
     @Field("description")
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private String description;
 
     @DBRef
@@ -123,13 +128,13 @@ public class Event implements Serializable {
     }
 
     public Boolean getIsPublic() {
-		return isPublic;
-	}
+        return isPublic;
+    }
 
-	public void setIsPublic(Boolean isPublic) {
-		this.isPublic = isPublic;
-	}    
-    
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
+    }
+
     public String getUrlImage() {
         return this.urlImage;
     }
@@ -230,10 +235,33 @@ public class Event implements Serializable {
     }
 
     @Override
-	public String toString() {
-		return "Event [id=" + id + ", title=" + title + ", organization=" + organization + ", status=" + status
-				+ ", favorite=" + favorite + ", isPublic=" + isPublic + ", urlImage=" + urlImage + ", dateStart="
-				+ dateStart + ", dateEnd=" + dateEnd + ", description=" + description + ", location=" + location
-				+ ", ticket=" + ticket + "]";
-	}
+    public String toString() {
+        return (
+            "Event [id=" +
+            id +
+            ", title=" +
+            title +
+            ", organization=" +
+            organization +
+            ", status=" +
+            status +
+            ", favorite=" +
+            favorite +
+            ", isPublic=" +
+            isPublic +
+            ", urlImage=" +
+            urlImage +
+            ", dateStart=" +
+            dateStart +
+            ", dateEnd=" +
+            dateEnd +
+            ", description=" +
+            description +
+            ", location=" +
+            location +
+            ", ticket=" +
+            ticket +
+            "]"
+        );
+    }
 }

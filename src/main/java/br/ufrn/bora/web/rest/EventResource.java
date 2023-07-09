@@ -6,14 +6,25 @@ import br.ufrn.bora.service.dto.EventDTO;
 import br.ufrn.bora.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -149,6 +160,30 @@ public class EventResource {
     public List<EventDTO> getAllEvents() {
         log.debug("REST request to get all Events");
         return eventService.findAll();
+    }
+
+    /**
+     * {@code GET  /search} : get all the events by search criteria.
+     *
+     * @param dateStart        inicial date of event
+     * @param address          of event
+     * @param city             of event
+     * @param state            of event
+     * @param lowerTicketValue ticket lower bound price
+     * @param upperTicketValue ticket upper bound price
+     * @return list of events that match the search criteria
+     */
+    @GetMapping("/events/search")
+    public List<EventDTO> searchEvent(
+        @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm") LocalDateTime dateStart,
+        @RequestParam(required = false) String address,
+        @RequestParam(required = false) String city,
+        @RequestParam(required = false) String state,
+        @RequestParam(required = false) Float lowerTicketValue,
+        @RequestParam(required = false) Float upperTicketValue
+    ) {
+        log.debug("REST request to get all Events by dateStart, address, city, state, lowerTicketValue, upperTicketValue");
+        return eventService.searchEvent(dateStart, address, city, state, lowerTicketValue, upperTicketValue);
     }
 
     /**

@@ -1,5 +1,6 @@
 package br.ufrn.bora.service;
 
+import br.ufrn.bora.domain.Event;
 import br.ufrn.bora.domain.EventRegister;
 import br.ufrn.bora.repository.EventRegisterRepository;
 import java.util.List;
@@ -123,9 +124,25 @@ public class EventRegisterService {
 
     /**
      * Find an eventRegister by user id.
+     * @param userId the id of the user
      */
     public Optional<EventRegister> findByUserId(String userId) {
         log.debug("Request to get EventRegister by user id : {}", userId);
         return eventRegisterRepository.findByUserId(userId);
+    }
+
+    /**
+     * Check if an event is on the list of the events of the user
+     * @param eventId the id of the event
+     * @param userId the id of the user
+     */
+    public boolean hasUserAttendedEvent(String eventId, String userId) {
+        log.debug("Request to check if event is registered : {}", eventId);
+        Optional<EventRegister> eventRegister = findByUserId(userId);
+        if (eventRegister.isPresent()) {
+            List<String> events = eventRegister.get().getEvents().stream().map(Event::getId).collect(Collectors.toList());
+            return events.contains(eventId);
+        }
+        return false;
     }
 }

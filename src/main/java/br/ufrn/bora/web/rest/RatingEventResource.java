@@ -1,10 +1,15 @@
 package br.ufrn.bora.web.rest;
 
+import br.ufrn.bora.domain.Event;
 import br.ufrn.bora.domain.RatingEvent;
+import br.ufrn.bora.domain.User;
 import br.ufrn.bora.service.EventRegisterService;
+import br.ufrn.bora.service.EventService;
 import br.ufrn.bora.service.RatingEventService;
+import br.ufrn.bora.service.UserService;
 import br.ufrn.bora.service.dto.RatingEventDTO;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +26,15 @@ public class RatingEventResource {
 
     private final EventRegisterService eventRegisterService;
 
-    public RatingEventResource(RatingEventService ratingEventService, EventRegisterService eventRegisterService) {
+    private final EventService eventService;
+
+    private final UserService userService;
+
+    public RatingEventResource(RatingEventService ratingEventService, EventRegisterService eventRegisterService, EventService eventService, UserService userService) {
         this.ratingEventService = ratingEventService;
         this.eventRegisterService = eventRegisterService;
+        this.eventService = eventService;
+        this.userService = userService;
     }
 
     @GetMapping("/rating-event")
@@ -45,9 +56,21 @@ public class RatingEventResource {
             return ResponseEntity.badRequest().build();
         }
 
+        Optional<Event> eventOpt = eventService.getEventById(ratingEventDTO.getEventId());
+        if (eventOpt.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Optional<User> userOptional = userService.getUserById(ratingEventDTO.getUserId());
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
         RatingEvent ratingEvent = new RatingEvent();
         ratingEvent.setRating(ratingEventDTO.getRating());
         ratingEvent.setComment(ratingEventDTO.getComment());
+        ratingEvent.setEvent(eventOpt.get());
+        ratingEvent.setUser(userOptional.get());
         return ResponseEntity.ok().body(ratingEventService.save(ratingEvent));
     }
 

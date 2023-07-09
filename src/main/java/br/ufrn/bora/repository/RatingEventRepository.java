@@ -3,6 +3,8 @@ package br.ufrn.bora.repository;
 import br.ufrn.bora.domain.Event;
 import br.ufrn.bora.domain.RatingEvent;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,5 +20,7 @@ public interface RatingEventRepository extends MongoRepository<RatingEvent, Stri
 
     List<RatingEvent> findByUserId(String userId);
 
-    List<RatingEvent> findByEventIdAndUserId(String eventId, String userId);
+    List<RatingEvent> findByUserIdAndEventId(String userId, String eventId);
+
 }
+

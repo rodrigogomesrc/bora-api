@@ -71,6 +71,6 @@ public class RatingEventService {
      */
     public List<RatingEvent> findByEventIdAndUserId(String eventId, String userId) {
         log.debug("Request to get all RatingEvents by eventId and userId");
-        return ratingEventRepository.findByEventIdAndUserId(eventId, userId);
+        return ratingEventRepository.findByUserIdAndEventId(userId, eventId);
     }
 }

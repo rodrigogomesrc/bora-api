@@ -31,8 +31,11 @@ public class Event implements Serializable {
 
     @Field("favorite")
     private Boolean favorite;
+    
+    @Field("is_public")
+    private Boolean isPublic;
 
-    @Field("url_image")
+	@Field("url_image")
     private String urlImage;
 
     @Field("date_start")
@@ -119,6 +122,14 @@ public class Event implements Serializable {
         this.favorite = favorite;
     }
 
+    public Boolean getIsPublic() {
+		return isPublic;
+	}
+
+	public void setIsPublic(Boolean isPublic) {
+		this.isPublic = isPublic;
+	}    
+    
     public String getUrlImage() {
         return this.urlImage;
     }
@@ -218,19 +229,11 @@ public class Event implements Serializable {
         return getClass().hashCode();
     }
 
-    // prettier-ignore
     @Override
-    public String toString() {
-        return "Event{" +
-                "id=" + getId() +
-                ", title='" + getTitle() + "'" +
-                ", organization='" + getOrganization() + "'" +
-                ", status='" + getStatus() + "'" +
-                ", favorite='" + getFavorite() + "'" +
-                ", urlImage='" + getUrlImage() + "'" +
-                ", dateStart='" + getDateStart() + "'" +
-                ", dateEnd='" + getDateEnd() + "'" +
-                ", description='" + getDescription() + "'" +
-                "}";
-    }
+	public String toString() {
+		return "Event [id=" + id + ", title=" + title + ", organization=" + organization + ", status=" + status
+				+ ", favorite=" + favorite + ", isPublic=" + isPublic + ", urlImage=" + urlImage + ", dateStart="
+				+ dateStart + ", dateEnd=" + dateEnd + ", description=" + description + ", location=" + location
+				+ ", ticket=" + ticket + "]";
+	}
 }

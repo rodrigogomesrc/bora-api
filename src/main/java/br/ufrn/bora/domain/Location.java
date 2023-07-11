@@ -38,6 +38,15 @@ public class Location implements Serializable {
     @Field("country")
     private String country;
 
+    @Field("place_name")
+    private String placeName;
+    
+    @Field("cep")
+    private String cep;
+    
+    @Field("complement")
+    private String complement;
+    
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public String getId() {
@@ -143,11 +152,35 @@ public class Location implements Serializable {
     public void setCountry(String country) {
         this.country = country;
     }
-
+    
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
     // setters here
 
-    @Override
+    public String getPlaceName() {
+		return placeName;
+	}
+
+	public void setPlaceName(String placeName) {
+		this.placeName = placeName;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getComplement() {
+		return complement;
+	}
+
+	public void setComplement(String complement) {
+		this.complement = complement;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -165,18 +198,10 @@ public class Location implements Serializable {
         return getClass().hashCode();
     }
 
-    // prettier-ignore
     @Override
-    public String toString() {
-        return "Location{" +
-                "id=" + getId() +
-                ", latitude=" + getLatitude() +
-                ", longitude=" + getLongitude() +
-                ", number='" + getNumber() + "'" +
-                ", address='" + getAddress() + "'" +
-                ", city='" + getCity() + "'" +
-                ", state='" + getState() + "'" +
-                ", country='" + getCountry() + "'" +
-                "}";
-    }
+	public String toString() {
+		return "Location [id=" + id + ", latitude=" + latitude + ", longitude=" + longitude + ", number=" + number
+				+ ", address=" + address + ", city=" + city + ", state=" + state + ", country=" + country
+				+ ", placeName=" + placeName + ", cep=" + cep + ", complement=" + complement + "]";
+	}
 }

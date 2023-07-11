@@ -1,6 +1,8 @@
 package br.ufrn.bora.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -25,6 +27,15 @@ public class Ticket implements Serializable {
 
     @Field("type")
     private String type;
+    
+    @Field("description")
+    private String description;
+    
+    @Field("date_start")
+    private LocalDateTime dateStart;
+
+    @Field("date_end")
+    private LocalDateTime dateEnd;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -82,7 +93,31 @@ public class Ticket implements Serializable {
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
-    @Override
+    public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public LocalDateTime getDateStart() {
+		return dateStart;
+	}
+
+	public void setDateStart(LocalDateTime dateStart) {
+		this.dateStart = dateStart;
+	}
+
+	public LocalDateTime getDateEnd() {
+		return dateEnd;
+	}
+
+	public void setDateEnd(LocalDateTime dateEnd) {
+		this.dateEnd = dateEnd;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -99,14 +134,9 @@ public class Ticket implements Serializable {
         return getClass().hashCode();
     }
 
-    // prettier-ignore
     @Override
-    public String toString() {
-        return "Ticket{" +
-            "id=" + getId() +
-            ", price=" + getPrice() +
-            ", name='" + getName() + "'" +
-            ", type='" + getType() + "'" +
-            "}";
-    }
+	public String toString() {
+		return "Ticket [id=" + id + ", price=" + price + ", name=" + name + ", type=" + type + ", description="
+				+ description + ", dateStart=" + dateStart + ", dateEnd=" + dateEnd + "]";
+	}
 }

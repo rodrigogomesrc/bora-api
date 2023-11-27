@@ -13,8 +13,10 @@ public class RatingEventService {
 
     private final Logger log = LoggerFactory.getLogger(RatingEventService.class);
 
-    RatingEventRepository ratingEventRepository;
+    //@invariant ratingEventRepository != null;
+    private RatingEventRepository ratingEventRepository;
 
+    //@requires ratingEventRepository != null;
     public RatingEventService(RatingEventRepository ratingEventRepository) {
         this.ratingEventRepository = ratingEventRepository;
     }
@@ -25,6 +27,9 @@ public class RatingEventService {
      * @param ratingEvent the entity to save.
      * @return the persisted entity.
      */
+    //@requires ratingEvent != null;
+    //@ensures \result != null;
+    //@pure
     public RatingEvent save(RatingEvent ratingEvent) {
         log.debug("Request to save RatingEvent : {}", ratingEvent);
         return ratingEventRepository.save(ratingEvent);
@@ -35,6 +40,8 @@ public class RatingEventService {
      *
      * @return the list of entities.
      */
+    //@ensures \result != null;
+    //@pure
     public List<RatingEvent> findAll() {
         log.debug("Request to get all RatingEvents");
         return ratingEventRepository.findAll();
@@ -46,6 +53,9 @@ public class RatingEventService {
      * @param eventId the id of the event.
      * @return the list of entities.
      */
+    //@requires eventId != null;
+    //@ensures \result != null;
+    //@pure
     public List<RatingEvent> findByEventId(String eventId) {
         log.debug("Request to get all RatingEvents by eventId");
         return ratingEventRepository.findByEventId(eventId);
@@ -57,6 +67,9 @@ public class RatingEventService {
      * @param userId the id of the user.
      * @return the list of entities.
      */
+    //@requires userId != null;
+    //@ensures \result != null;
+    //@pure
     public List<RatingEvent> findByUserId(String userId) {
         log.debug("Request to get all RatingEvents by userId");
         return ratingEventRepository.findByUserId(userId);
@@ -69,8 +82,12 @@ public class RatingEventService {
      * @param userId the id of the user.
      * @return the list of entities.
      */
+    //@requires eventId != null && userId != null;
+    //@ensures \result != null;
+    //@pure
     public List<RatingEvent> findByEventIdAndUserId(String eventId, String userId) {
         log.debug("Request to get all RatingEvents by eventId and userId");
         return ratingEventRepository.findByUserIdAndEventId(userId, eventId);
     }
 }
+

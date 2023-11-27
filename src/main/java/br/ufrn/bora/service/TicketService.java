@@ -24,17 +24,16 @@ public class TicketService {
 
     private final TicketMapper ticketMapper;
 
+    //@requires ticketRepository != null;
+    //@requires ticketMapper != null;
     public TicketService(TicketRepository ticketRepository, TicketMapper ticketMapper) {
         this.ticketRepository = ticketRepository;
         this.ticketMapper = ticketMapper;
     }
 
-    /**
-     * Save a ticket.
-     *
-     * @param ticketDTO the entity to save.
-     * @return the persisted entity.
-     */
+    //@requires ticketDTO != null;
+    //@ensures \result != null;
+    //@pure
     public TicketDTO save(TicketDTO ticketDTO) {
         log.debug("Request to save Ticket : {}", ticketDTO);
         Ticket ticket = ticketMapper.toEntity(ticketDTO);
@@ -42,12 +41,9 @@ public class TicketService {
         return ticketMapper.toDto(ticket);
     }
 
-    /**
-     * Update a ticket.
-     *
-     * @param ticketDTO the entity to save.
-     * @return the persisted entity.
-     */
+    //@requires ticketDTO != null;
+    //@ensures \result != null;
+    //@pure
     public TicketDTO update(TicketDTO ticketDTO) {
         log.debug("Request to update Ticket : {}", ticketDTO);
         Ticket ticket = ticketMapper.toEntity(ticketDTO);
@@ -55,12 +51,9 @@ public class TicketService {
         return ticketMapper.toDto(ticket);
     }
 
-    /**
-     * Partially update a ticket.
-     *
-     * @param ticketDTO the entity to update partially.
-     * @return the persisted entity.
-     */
+    //@requires ticketDTO != null;
+    //@ensures \result != null || \result.isEmpty();
+    //@pure
     public Optional<TicketDTO> partialUpdate(TicketDTO ticketDTO) {
         log.debug("Request to partially update Ticket : {}", ticketDTO);
 
@@ -68,39 +61,28 @@ public class TicketService {
             .findById(ticketDTO.getId())
             .map(existingTicket -> {
                 ticketMapper.partialUpdate(existingTicket, ticketDTO);
-
                 return existingTicket;
             })
             .map(ticketRepository::save)
             .map(ticketMapper::toDto);
     }
 
-    /**
-     * Get all the tickets.
-     *
-     * @return the list of entities.
-     */
+    //@ensures \result != null;
+    //@pure
     public List<TicketDTO> findAll() {
         log.debug("Request to get all Tickets");
         return ticketRepository.findAll().stream().map(ticketMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
 
-    /**
-     * Get one ticket by id.
-     *
-     * @param id the id of the entity.
-     * @return the entity.
-     */
+    //@requires id != null;
+    //@ensures \result != null;
+    //@pure
     public Optional<TicketDTO> findOne(String id) {
         log.debug("Request to get Ticket : {}", id);
         return ticketRepository.findById(id).map(ticketMapper::toDto);
     }
 
-    /**
-     * Delete the ticket by id.
-     *
-     * @param id the id of the entity.
-     */
+    //@requires id != null;
     public void delete(String id) {
         log.debug("Request to delete Ticket : {}", id);
         ticketRepository.deleteById(id);

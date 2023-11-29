@@ -1,63 +1,63 @@
 package br.ufrn.bora.domain;
 
 import br.ufrn.bora.domain.enumeration.Status;
-import com.fasterxml.jackson.annotation.JsonFormat;
+//import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.format.annotation.DateTimeFormat;
+//import org.springframework.data.annotation.Id;
+//import org.springframework.data.mongodb.core.mapping.DBRef;
+//import org.springframework.data.mongodb.core.mapping.Document;
+//import org.springframework.data.mongodb.core.mapping.Field;
+//import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * A Event.
  */
-@Document(collection = "event")
-@SuppressWarnings("common-java:DuplicatedBlocks")
+//@Document(collection = "event")
+//@SuppressWarnings("common-java:DuplicatedBlocks")
 public class Event implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
+    //@Id
     private String id;
 
-    @Field("title")
+    //@Field("title")
     private String title;
 
-    @Field("organization")
+    //@Field("organization")
     private String organization;
 
-    @Field("status")
+    //@Field("status")
     private Status status;
 
-    @Field("favorite")
+    //@Field("favorite")
     private Boolean favorite;
 
-    @Field("is_public")
+    //@Field("is_public")
     private Boolean isPublic;
 
-    @Field("url_image")
+    //@Field("url_image")
     private String urlImage;
 
-    @Field("date_start")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
+    //@Field("date_start")
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime dateStart;
 
-    @Field("date_end")
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+    //@Field("date_end")
+    //@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime dateEnd;
 
-    @Field("description")
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+    //@Field("description")
+    //@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private String description;
 
-    @DBRef
-    @Field("location")
+    //@DBRef
+    //@Field("location")
     private Location location;
 
-    @DBRef
-    @Field("ticket")
+    //@DBRef
+    //@Field("ticket")
     private Ticket ticket;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

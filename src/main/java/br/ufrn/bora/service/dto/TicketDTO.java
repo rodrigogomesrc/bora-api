@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * A DTO for the {@link br.ufrn.bora.domain.Ticket} entity.
  */
-@SuppressWarnings("common-java:DuplicatedBlocks")
+//@SuppressWarnings("common-java:DuplicatedBlocks")
 public class TicketDTO implements Serializable {
 
     private String id;

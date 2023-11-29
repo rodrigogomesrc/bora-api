@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 /**
  * Service Implementation for managing {@link Ticket}.
  */
-@Service
+//@Service
 public class TicketService {
 
     private final Logger log = LoggerFactory.getLogger(TicketService.class);

@@ -10,31 +10,31 @@ import org.springframework.data.mongodb.core.mapping.Field;
 /**
  * A Ticket.
  */
-@Document(collection = "ticket")
-@SuppressWarnings("common-java:DuplicatedBlocks")
+//@Document(collection = "ticket")
+//@SuppressWarnings("common-java:DuplicatedBlocks")
 public class Ticket implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
+    //@Id
     private String id;
 
-    @Field("price")
+    //@Field("price")
     private Float price;
 
-    @Field("name")
+    //@Field("name")
     private String name;
 
-    @Field("type")
+    //@Field("type")
     private String type;
-    
-    @Field("description")
+
+    //@Field("description")
     private String description;
-    
-    @Field("date_start")
+
+    //@Field("date_start")
     private LocalDateTime dateStart;
 
-    @Field("date_end")
+    //@Field("date_end")
     private LocalDateTime dateEnd;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

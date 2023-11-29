@@ -3,9 +3,9 @@ package br.ufrn.bora.domain;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
+//import org.springframework.data.annotation.Id;
+//import org.springframework.data.mongodb.core.mapping.Document;
+//import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * A Ticket.
